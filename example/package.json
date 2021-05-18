@@ -1,0 +1,17 @@
+{
+  "name": "example",
+  "version": "1.0.0",
+  "description": "",
+  "main": "rollup.config.js",
+  "scripts": {
+    "dev": "rollup -c --watch",
+    "build": "cross-env NODE_ENV=production rollup -c"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "rollup": "link:../node_modules",
+    "rollup-plugin-crx": "file:../dist"
+  }
+}
