@@ -1,6 +1,6 @@
 {
   "name": "@squidc/rollup-plugin-crx",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "rollup plugin chrome extension",
   "files": [
     "dist"
