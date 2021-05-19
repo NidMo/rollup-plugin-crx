@@ -1,5 +1,5 @@
 // @ts-check
-import crxPlugin from "rollup-plugin-crx"
+import crxPlugin from "@squidc/rollup-plugin-crx"
 import typescript from "@rollup/plugin-typescript";
 import path from "path"
 

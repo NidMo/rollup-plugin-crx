@@ -1,5 +1,5 @@
 {
-  "name": "vite-plugin-crx",
+  "name": "@squidc/rollup-plugin-crx",
   "version": "1.0.0",
   "description": "rollup plugin chrome extension",
   "files": [
@@ -9,7 +9,8 @@
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "rollup -c"
+    "build": "rollup -c",
+    "release": "node scripts/release.js"
   },
   "keywords": [
     "rollup",
@@ -23,7 +24,12 @@
     "@types/node": "^15.0.2",
     "@types/rollup": "^0.54.0",
     "@types/ws": "^7.4.4",
+    "chalk": "^4.1.1",
+    "enquirer": "^2.3.6",
+    "execa": "^5.0.0",
+    "minimist": "^1.2.5",
     "rollup": "^2.47.0",
+    "semver": "^7.3.5",
     "tslib": "^2.2.0",
     "typescript": "^4.2.4"
   },
