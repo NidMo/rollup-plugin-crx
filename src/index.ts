@@ -27,7 +27,7 @@ export default function crxPlugin(
   const { background, content, root } = options;
   const isDev = process.env.NODE_ENV !== 'production';
 
-  const outDir = options.outDir || path.resolve(root, "dist");
+  const outDir = options.outDir || path.resolve(__dirname, "dist");
   const backgroundPlugins = options.plugins || []
   const contentPlugins = options.plugins || []
 
