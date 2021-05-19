@@ -1,8 +1,12 @@
 // @ts-check
 import crxPlugin from "@squidc/rollup-plugin-crx"
 import typescript from "@rollup/plugin-typescript";
+import replace from '@rollup/plugin-replace'
+import nodeResolve from 'rollup-plugin-node-resolve'    
+import commonjs from 'rollup-plugin-commonjs' 
 import path from "path"
 
+const env = process.env.NODE_ENV
 /**
  * 
  * @param {string} dir 
@@ -16,7 +20,6 @@ export default crxPlugin({
   name: "demo",
   version: "1.0.0",
   port: 3080,
-  outDir: pathResolve("dist"),
   background: [
     pathResolve("background/index.ts"),
     pathResolve("background/a.ts"),
@@ -25,32 +28,14 @@ export default crxPlugin({
     {
       matches: ["<all_urls>"],
       js: [pathResolve("./content/index.ts")],
-    },
-    {
-      matches: ["<all_urls>"],
-      js: [pathResolve("./content/entry.ts")],
-    },
+    }
   ],
   plugins: [
+    replace({
+      'process.env.NODE_ENV': JSON.stringify(env)
+    }),
+    nodeResolve(),
+    commonjs(),
     typescript(),
   ],
 });
-
-// const rollupConfig = {
-//   input: {
-//     background:pathResolve("background/index.ts"),
-//     a: pathResolve("background/a.ts"),
-//   },
-//   plugins: [
-//     typescript(),
-//   ],
-//   output: {
-//     dir: pathResolve("dist"),
-//     entryFileNames: "[name].js",
-//     chunkFileNames: "[name].js",
-//     assetFileNames: "[name].js",
-//     format: "esm"
-//   },
-// }
-
-// export default rollupConfig
