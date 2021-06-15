@@ -20,6 +20,7 @@ export default crxPlugin({
   name: "demo",
   version: "1.0.0",
   port: 3080,
+  publicDir: pathResolve("images"),
   background: [
     pathResolve("background/index.ts"),
     pathResolve("background/a.ts"),
@@ -30,6 +31,7 @@ export default crxPlugin({
       js: [pathResolve("./content/index.ts")],
     }
   ],
+  web_accessible_resources: ["**/*"],
   plugins: [
     replace({
       'process.env.NODE_ENV': JSON.stringify(env)
