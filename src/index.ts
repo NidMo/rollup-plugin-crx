@@ -10,6 +10,7 @@ import {
   genReloadCode,
 } from "./utils";
 import path from "path";
+import fs from 'fs';
 import { createWebSocketServer } from "./ws";
 import { listenExitProcess } from "./process";
 import reloadPlugin from "./reload";
@@ -27,15 +28,17 @@ export default function crxPlugin(
   const { background, content, root } = options;
   const isDev = process.env.NODE_ENV !== 'production';
 
-  const outDir = options.outDir || path.resolve(__dirname, "dist");
+  const outDir = options.outDir || path.resolve(root, "dist");
   const backgroundPlugins = options.plugins || []
   const contentPlugins = options.plugins || []
 
   // 存放客户端逻辑的目录
   const clientDir = path.resolve(
-    options.root,
+    root,
     "node_modules/rollup-plugin-crx/client"
   );
+
+  const publicDir = options.publicDir 
 
   // 生成background html
   genBackgroundHtml(clientDir,background)
@@ -43,9 +46,14 @@ export default function crxPlugin(
   // 生成清单文件manifest.json
   genManifest(clientDir, options);
 
-  // 将客户端文件，复制到输出目录
-  copyDir(clientDir,outDir)
+  // 将客户端文件夹复制到输出目录
+  copyDir(clientDir, outDir)
 
+  // 将资源文件夹复制到输出目录
+  if (publicDir && fs.existsSync(publicDir)) {
+    const { name } = path.parse(publicDir)
+    copyDir(publicDir, outDir + "/" + name)
+  }
   
   if(isDev){
     // 热重载代码

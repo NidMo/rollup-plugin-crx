@@ -15,6 +15,10 @@ export interface Options extends Omit<Manifest,"background" | "content_scripts">
      */
     plugins?: Plugin[];
     /**
+     * 资源文件目录
+     */
+     publicDir?: string;
+    /**
      * 输出目录
      */
     outDir?: string;

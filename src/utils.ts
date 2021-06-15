@@ -278,13 +278,15 @@ export function genContentRollup (content: ContentOpts | undefined,plugins: Plug
   isGenHtml?: boolean
 ) {
   // 复制配置项，剔除不属于于chrome extension的配置
-  const { host, port, root, background, content, outDir, plugins, ...manifest } = options;
+  const { host, port, root, background, content, publicDir, outDir, plugins, ...manifest } = options;
   const filename = clientDir + "/manifest.json";
   const dir = path.dirname(filename);
   const backgroundManifest = genBackgroundManifest(background);
   const contentManifest = genContentManifest(content);
+  const resourcesManifest = genResourcesManifest(publicDir,options.web_accessible_resources);
   (manifest as Manifest).background = backgroundManifest;
   (manifest as Manifest).content_scripts = contentManifest;
+  (manifest as Manifest).web_accessible_resources = resourcesManifest;
   if (isGenHtml) {
     (manifest as Manifest).background = {
       page: "background.html",
@@ -349,3 +351,17 @@ export function genContentRollup (content: ContentOpts | undefined,plugins: Plug
     return [];
   }
 };
+
+export const genResourcesManifest = function (publicDir?: string,options?: string | string[]) {
+  let resources: string[] = []
+  if (typeof options === "string") {
+    resources.push(options)
+  } else if (Array.isArray(options)) {
+    resources = options
+  }
+  if(publicDir){
+    const {name} = path.parse(publicDir)
+    resources.push(name+"/*")
+  }
+  return resources
+}
